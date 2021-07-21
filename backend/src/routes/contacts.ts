@@ -1,27 +1,22 @@
 import {Router, Request, Response} from 'express'
+import { ContactController } from '../controllers/ContactController'
 import { Contact } from '../model/ContactModel'
 
 export class ContactRouter{
 
-    contacts: Contact[] = [
-        {
-            name: "pedro",
-            phone: "1234567"
-        }
-    ]
+    controller = new ContactController()
+    
     
     public getRoutes(): Router {
 
      const router: Router = Router()
 
      router.get('/', (req: Request, res: Response) => {
-         res.send(this.contacts)
+         this.controller.getContact(req, res)
      })
 
      router.post('/', (req: Request, res: Response) => {
-         const contact = req.body
-         this.contacts.push(contact)
-         res.send('Hello World')
+         this.controller.createContact(req, res)
      })
 
      router.put('/', (req: Request, res: Response) => {
@@ -30,10 +25,10 @@ export class ContactRouter{
 
     router.delete('/:id', (req: Request, res: Response) => {
         const id: number = Number(req.params.id)
-        this.contacts.splice(id, 1)
+        //this.contacts.splice(id, 1)
 
 
-        res.send(this.contacts)
+        //res.send(this.contacts)
     })
 
 
